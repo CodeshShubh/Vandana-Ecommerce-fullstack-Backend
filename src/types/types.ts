@@ -39,22 +39,22 @@ export interface BaseQuery {
   category?: string;
 }
 
-// export type InvalidateCacheProps = {
-//   product?: boolean;
-//   order?: boolean;
-//   admin?: boolean;
-//   userId?: string;
-//   orderId?: string;
-//   productId?: string | string[];
-// };
+export type InvalidateCacheProps = {
+  product?: boolean;
+  order?: boolean;
+  admin?: boolean;
+  // userId?: string;
+  // orderId?: string;
+  // productId?: string | string[];
+};
 
-// export type OrderItemType = {
-//   name: string;
-//   photo: string;
-//   price: number;
-//   quantity: number;
-//   productId: string;
-// };
+export type OrderItemType = {
+  name: string;
+  photo: string;
+  price: number;
+  quantity: number;
+  productId: string;
+};
 
 // export type ShippingInfoType = {
 //   address: string;
