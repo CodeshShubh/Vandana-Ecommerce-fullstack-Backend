@@ -49,28 +49,31 @@ export const getAllUsers = TryCatch(async (req, res, next) => {
   });
 });
 
-// export const getUser = TryCatch(async (req, res, next) => {
-//   const id = req.params.id;
-//   const user = await User.findById(id);
+// get user by id and in this fuction req.params.id me id equal or same likha hona chaiyee in routes me like /:id
+export const getUser = TryCatch(async (req, res, next) => {
+  const id = req.params.id;
+  const user = await User.findById(id);
 
-//   if (!user) return next(new ErrorHandler("Invalid Id", 400));
+  if (!user) return next(new ErrorHandler("Invalid Id", 400));
 
-//   return res.status(200).json({
-//     success: true,
-//     user,
-//   });
-// });
+  return res.status(200).json({
+    success: true,
+    user,
+  });
+});
 
-// export const deleteUser = TryCatch(async (req, res, next) => {
-//   const id = req.params.id;
-//   const user = await User.findById(id);
+//delete user
 
-//   if (!user) return next(new ErrorHandler("Invalid Id", 400));
+export const deleteUser = TryCatch(async (req, res, next) => {
+  const id = req.params.id;
+  const user = await User.findById(id);
 
-//   await user.deleteOne();
+  if (!user) return next(new ErrorHandler("Invalid Id", 400));
 
-//   return res.status(200).json({
-//     success: true,
-//     message: "User Deleted Successfully",
-//   });
-// });
+  await user.deleteOne();
+
+  return res.status(200).json({
+    success: true,
+    message: "User Deleted Successfully",
+  });
+});

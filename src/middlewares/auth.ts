@@ -1,17 +1,18 @@
-// import { User } from "../models/user.js";
-// import ErrorHandler from "../utils/utility-class.js";
-// import { TryCatch } from "./error.js";
+import { User } from "../models/user.js";
+import ErrorHandler from "../utils/utility-class.js";
+import { TryCatch } from "./error.js";
 
-// // Middleware to make sure only admin is allowed
-// export const adminOnly = TryCatch(async (req, res, next) => {
-//   const { id } = req.query;
+// Middleware to make sure only admin is allowed (and use this as a middleware in app.js)
+export const adminOnly = TryCatch(async (req, res, next) => {
+    // and query routes like - "api/v1/sjksdj?key=24"
+  const { id } = req.query;
 
-//   if (!id) return next(new ErrorHandler("Saale Login Kr phle", 401));
+  if (!id) return next(new ErrorHandler("Please login Yourself as Admin", 401));
 
-//   const user = await User.findById(id);
-//   if (!user) return next(new ErrorHandler("Saale Fake ID Deta Hai", 401));
-//   if (user.role !== "admin")
-//     return next(new ErrorHandler("Saale Aukat Nhi Hai Teri", 403));
+  const user = await User.findById(id);
+  if (!user) return next(new ErrorHandler("Please Enter Correct Id and Passowrd", 401));
+  if (user.role !== "admin")
+    return next(new ErrorHandler("Your are not a Admin", 403));
 
-//   next();
-// });
+  next();
+});

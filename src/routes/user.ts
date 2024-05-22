@@ -1,11 +1,11 @@
 import express from "express";
 import {
-//   deleteUser,
+  deleteUser,
   getAllUsers,
-//   getUser,
+  getUser,
   newUser,
 } from "../controllers/user.js";
-// import { adminOnly } from "../middlewares/auth.js";
+import { adminOnly } from "../middlewares/auth.js";
 
 const app = express.Router();
 
@@ -13,9 +13,9 @@ const app = express.Router();
 app.post("/new", newUser);
 
 // // Route - /api/v1/user/all
-app.get("/all", getAllUsers); // adminOnly,
+app.get("/all",adminOnly, getAllUsers); // adminOnly,
 
-// // Route - /api/v1/user/dynamicID
-// app.route("/:id").get(getUser).delete(adminOnly, deleteUser);
+// // Route - /api/v1/user/dynamicID (notice- for use both route at same time use (route))
+app.route("/:id").get(adminOnly,getUser).delete(adminOnly, deleteUser); //
 
 export default app;
