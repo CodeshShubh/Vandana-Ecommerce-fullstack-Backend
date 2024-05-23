@@ -138,7 +138,7 @@ export const updateProduct = TryCatch(async (req, res, next) => {
 
   invalidateCache({
     product: true,
-    //productId: String(product._id),
+    productId: String(product._id),
     admin: true,
   });
 
@@ -160,7 +160,7 @@ export const deleteProduct = TryCatch(async (req, res, next) => {
 
   invalidateCache({
     product: true,
-    //productId: String(product._id),
+    productId: String(product._id),
     admin: true,
   });
 
