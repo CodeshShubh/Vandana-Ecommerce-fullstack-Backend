@@ -50,6 +50,7 @@ export const invalidateCache = async({ product, order, admin, userId, orderId, p
   }
 };
 
+// reduceStock
 export const reduceStock = async (orderItems: OrderItemType[]) => {
   for (let i = 0; i < orderItems.length; i++) {
     const order = orderItems[i];
@@ -60,68 +61,70 @@ export const reduceStock = async (orderItems: OrderItemType[]) => {
   }
 };
 
-// export const calculatePercentage = (thisMonth: number, lastMonth: number) => {
-//   if (lastMonth === 0) return thisMonth * 100;
-//   const percent = (thisMonth / lastMonth) * 100;
-//   return Number(percent.toFixed(0));
-// };
+//calculate percentage
+export const calculatePercentage = (thisMonth: number, lastMonth: number) => {
+  if (lastMonth === 0) return thisMonth * 100;
+  const percent = (thisMonth / lastMonth) * 100;
+  return Number(percent.toFixed(0));
+};
 
-// export const getInventories = async ({
-//   categories,
-//   productsCount,
-// }: {
-//   categories: string[];
-//   productsCount: number;
-// }) => {
-//   const categoriesCountPromise = categories.map((category) =>
-//     Product.countDocuments({ category })
-//   );
 
-  // const categoriesCount = await Promise.all(categoriesCountPromise);
+export const getInventories = async ({
+  categories,
+  productsCount,
+}: {
+  categories: string[];
+  productsCount: number;
+}) => {
+  const categoriesCountPromise = categories.map((category) =>
+    Product.countDocuments({ category })
+  );
 
-  // const categoryCount: Record<string, number>[] = [];
+  const categoriesCount = await Promise.all(categoriesCountPromise);
 
-//   categories.forEach((category, i) => {
-//     categoryCount.push({
-//       [category]: Math.round((categoriesCount[i] / productsCount) * 100),
-//     });
-//   });
+  const categoryCount: Record<string, number>[] = [];
 
-//   return categoryCount;
-// };
+  categories.forEach((category, i) => {
+    categoryCount.push({
+      [category]: Math.round((categoriesCount[i] / productsCount) * 100),
+    });
+  });
 
-// interface MyDocument extends Document {
-//   createdAt: Date;
-//   discount?: number;
-//   total?: number;
-// }
-// type FuncProps = {
-//   length: number;
-//   docArr: MyDocument[];
-//   today: Date;
-//   property?: "discount" | "total";
-// };
+  return categoryCount;
+};
 
-// export const getChartData = ({
-//   length,
-//   docArr,
-//   today,
-//   property,
-// }: FuncProps) => {
-//   const data: number[] = new Array(length).fill(0);
+interface MyDocument extends Document {
+  createdAt: Date;
+  discount?: number;
+  total?: number;
+}
+type FuncProps = {
+  length: number;
+  docArr: MyDocument[];
+  today: Date;
+  property?: "discount" | "total";
+};
 
-//   docArr.forEach((i) => {
-//     const creationDate = i.createdAt;
-//     const monthDiff = (today.getMonth() - creationDate.getMonth() + 12) % 12;
+export const getChartData = ({
+  length,
+  docArr,
+  today,
+  property,
+}: FuncProps) => {
+  const data: number[] = new Array(length).fill(0);
 
-//     if (monthDiff < length) {
-//       if (property) {
-//         data[length - monthDiff - 1] += i[property]!;
-//       } else {
-//         data[length - monthDiff - 1] += 1;
-//       }
-//     }
-//   });
+  docArr.forEach((i) => {
+    const creationDate = i.createdAt;
+    const monthDiff = (today.getMonth() - creationDate.getMonth() + 12) % 12;
 
-//   return data;
-// };
+    if (monthDiff < length) {
+      if (property) {
+        data[length - monthDiff - 1] += i[property]!;
+      } else {
+        data[length - monthDiff - 1] += 1;
+      }
+    }
+  });
+
+  return data;
+};
