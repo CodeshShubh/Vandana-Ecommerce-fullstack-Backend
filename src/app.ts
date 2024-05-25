@@ -4,7 +4,7 @@ import { errorMiddleware } from "./middlewares/error.js";
 import NodeCache from "node-cache";
 import { config } from "dotenv";
 import morgan from "morgan"; // morgan used which api hit or request shows in terminal
-// import Stripe from "stripe";
+import Stripe from "stripe";
 // import cors from "cors";
 
 // Importing Routes
@@ -20,12 +20,12 @@ config({
 
 const port = process.env.PORT || 4000;
 const mongoURI = process.env.MONGO_URI || "mongodb://127.0.0.1:27017";
-// const stripeKey = process.env.STRIPE_KEY || "";
+const stripeKey = process.env.STRIPE_KEY || "";
 
 
 connectDB(mongoURI); 
  
-// export const stripe = new Stripe(stripeKey);
+export const stripe = new Stripe(stripeKey); // first install stripe pakage
 export const myCache = new NodeCache(); // create instanse of node cache(store data in ram or memory)
 
 const app = express();
