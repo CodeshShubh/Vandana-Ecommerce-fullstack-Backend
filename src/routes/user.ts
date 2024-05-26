@@ -16,6 +16,6 @@ app.post("/new", newUser);
 app.get("/all",adminOnly, getAllUsers); // adminOnly,
 
 // // Route - /api/v1/user/dynamicID (notice- for use both route at same time use (route))
-app.route("/:id").get(adminOnly,getUser).delete(adminOnly, deleteUser); //
+app.route("/:id").get(getUser).delete(adminOnly, deleteUser); //
 
 export default app;
